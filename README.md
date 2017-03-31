@@ -1,57 +1,49 @@
-The content below is an example project proposal / requirements document. Replace the text below the lines marked "__TODO__" with details specific to your project. Remove the "TODO" lines.
 
-(___TODO__: your project name_)
-
-# Shoppy Shoperson 
+# The Flee Market
 
 ## Overview
 
-(___TODO__: a brief one or two paragraph, high-level description of your project_)
+Sneaker collecting has been a thing ever since Michael Jordan released his first shoe with Nike back in 1985. But recently, there seems to be
+a surge in popularity in this so called sneaker game. Everyone from children to grown adults are seeking to own the hottest sneakers, vintage or brand new. However, not all of these coveted kicks can be purchased from your local Footlocker or Adidas store. Due to their high demand, the more sought after sneakers tend to sell out almost instantaneously these days and your only chance of obtaining a pair would be to buy it off of a fellow sneakerhead.
 
-Remembering what to buy at the grocery store is waaaaay too difficult. Also, shopping for groceries when you're hungry leads to regrettable purchases. Sooo... that's where Shoppy Shoperson comes in!
-
-Shoppy Shoperson is a web app that will allow users to keep track of multiple grocery lists. Users can register and login. Once they're logged in, they can create or view their grocery list. For every list that they have, they can add items to the list or cross off items.
-
+The Flee Market (TFM) aims to facilitate these secondary market transactions. TFM would allow users to post up a "Selling" or "Buying" listing for a  pair of sneakers and allows other users to reply to that listing to negotiate a deal, similar to Craigs List but centered around shoes. Users can also "favorite" listings, similar to an "add to cart" feature, to keep a list of the shoes they're thinking of buying.
 
 ## Data Model
 
-(___TODO__: a description of your application's data and their relationships to each other_) 
-
-The application will store Users, Lists and Items
-
-* users can have multiple lists (via references)
-* each list can have multiple items (by embedding)
-
-(___TODO__: sample documents_)
-
-An Example User:
-
-```javascript
-{
-  username: "shannonshopper",
-  hash: // a password hash,
-  lists: // an array of references to List documents
-}
-```
-
-An Example List with Embedded Items:
-
-```javascript
-{
-  user: // a reference to a User object
-  name: "Breakfast foods",
-  items: [
-    { name: "pancakes", quantity: "9876", checked: false},
-    { name: "ramen", quantity: "2", checked: true},
-  ],
-  createdAt: // timestamp
-}
-```
+This application would store Users, Listings (separated into picture(s) and description), and Comments.
 
 
 ## [Link to Commented First Draft Schema](db.js) 
 
-(___TODO__: create a first draft of your Schemas in db.js and link to it_)
+```javascript
+// Users
+const User = new mongoose.Schema({
+  // username, password done through Passport.js
+  listings:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Clip' }]
+});
+
+/*
+Name
+Image of shoe
+Shoe size
+Condition (out of 10)
+*/
+
+const Item = new mongoose.Schema({
+  name: String,
+  image: String,
+  size: Number,
+  condition: Number
+  user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
+  comments: [Comment]
+});
+
+// a Comment
+var Comment = new mongoose.Schema({
+  user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
+  text: String
+});
+```
 
 ## Wireframes
 
