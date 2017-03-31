@@ -11,9 +11,9 @@ The Flee Market (TFM) aims to facilitate these secondary market transactions. TF
 ## Data Model
 
 This application would store 
-*Users 
-*Listings (separated into picture(s) and description) 
-*Comments.
+* Users 
+* Listings (separated into picture(s) and description) 
+* Comments.
 
 
 ## Schema
@@ -72,20 +72,13 @@ var Comment = new mongoose.Schema({
 
 ## Research Topics
 
-(___TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed_)
+
 
 * (5 points) Integrate user authentication
-    * I'm going to be using passport for user authentication
-    * And account has been made for testing; I'll email you the password
-    * see <code>cs.nyu.edu/~jversoza/ait-final/register</code> for register page
-    * see <code>cs.nyu.edu/~jversoza/ait-final/login</code> for login page
-* (4 points) Perform client side form validation using a JavaScript library
-    * see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
-    * if you put in a number that's greater than 5, an error message will appear in the dom
-* (5 points) vue.js
-    * used vue.js as the frontend framework; it's a challenging library to learn, so I've assigned it 5 points
+    
+* (3 points) Unit testing with JavaScript
 
-10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
+
 
 
 ## [Link to Initial Main Project File](app.js) 
