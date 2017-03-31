@@ -10,7 +10,10 @@ The Flee Market (TFM) aims to facilitate these secondary market transactions. TF
 
 ## Data Model
 
-This application would store Users, Listings (separated into picture(s) and description), and Comments.
+This application would store 
+*Users 
+*Listings (separated into picture(s) and description) 
+*Comments.
 
 
 ## Schema
