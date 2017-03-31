@@ -13,7 +13,7 @@ The Flee Market (TFM) aims to facilitate these secondary market transactions. TF
 This application would store Users, Listings (separated into picture(s) and description), and Comments.
 
 
-## [Link to Commented First Draft Schema](db.js) 
+## Schema
 
 ```javascript
 // Users
@@ -27,13 +27,15 @@ Name
 Image of shoe
 Shoe size
 Condition (out of 10)
+Flaws of the shoe
 */
 
 const Item = new mongoose.Schema({
   name: String,
   image: String,
   size: Number,
-  condition: Number
+  condition: Number,
+  flaws: String,
   user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
   comments: [Comment]
 });
@@ -47,19 +49,11 @@ var Comment = new mongoose.Schema({
 
 ## Wireframes
 
-(___TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc._)
 
-/list/create - page for creating a new shopping list
 
-![list create](documentation/list-create.png)
+![Mock Listing](documentation/TheFleeMarket.png)
 
-/list - page for showing all shopping lists
 
-![list](documentation/list.png)
-
-/list/slug - page for showing specific shopping list
-
-![list](documentation/list-slug.png)
 
 ## Site map
 
@@ -69,14 +63,12 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 
 ## User Stories or Use Cases
 
-(___TODO__: write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format) and / or [use cases](https://www.mongodb.com/download-center?jmp=docs&_ga=1.47552679.1838903181.1489282706#previous)_)
-
 1. as non-registered user, I can register a new account with the site
 2. as a user, I can log in to the site
-3. as a user, I can create a new grocery list
-4. as a user, I can view all of the grocery lists I've created in a single list
-5. as a user, I can add items to an existing grocery list
-6. as a user, I can cross off items in an existing grocery list
+3. as a user, I can create a new sneaker listing
+4. as a user, I can view all of the listings created by other users
+5. as a user, I can comment on other listings
+6. as a user, I can add other listings to my "favorites" list
 
 ## Research Topics
 
