@@ -54,7 +54,7 @@ var Comment = new mongoose.Schema({
 
 
 
-![Mock Listing](documentation/TheFleeMarket.png)
+
 
 
 
