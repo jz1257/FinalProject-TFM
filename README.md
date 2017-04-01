@@ -68,8 +68,9 @@ var Comment = new mongoose.Schema({
 2. as a user, I can log in to the site
 3. as a user, I can create a new sneaker listing
 4. as a user, I can view all of the listings created by other users
-5. as a user, I can comment on other listings
-6. as a user, I can add other listings to my "favorites" list
+5. as a user, I can view all of the listings favorited by other users
+6. as a user, I can add other listings to my favorites list
+7. as a user, I can comment on other listings
 
 ## Research Topics
 
