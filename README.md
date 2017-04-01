@@ -60,6 +60,7 @@ var Comment = new mongoose.Schema({
 
 ## Site map
 
+![Mock Listing](documentation/SiteMap.png)
 
 ## User Stories or Use Cases
 
