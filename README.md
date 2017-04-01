@@ -87,6 +87,6 @@ var Comment = new mongoose.Schema({
 
 
 
-## [Link to Initial Main Project File](app.js) 
+## [Link to Initial Main Project File](code/app.js) 
 
 
