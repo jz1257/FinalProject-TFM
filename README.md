@@ -77,8 +77,12 @@ var Comment = new mongoose.Schema({
 
 
 * (5 points) Integrate user authentication
+
+  User authentication would be necessary for this web application due to the interactive nature of the site. User authentication would also allow users to conveniently catalog their sneaker listings under one account and update them whenever necessary. 
     
 * (3 points) Unit testing with JavaScript
+  
+  Unit testing to ensure the site works in bits and pieces before assembling together.
 
 
 
