@@ -25,10 +25,34 @@ app.use(session(sessionOptions));
 
 require('./db');
 
+const mongoose = require('mongoose'),
+Item = mongoose.model('Item');
+
 app.get('/', (req, res) => {
-  res.render("The Flee Market is under construction");
+  Item.find({}, (err, items) => {
+		if(err) {
+			console.log(err);
+		}
+		else {
+			res.render('home', {items: items});
+		}
+	});
+});
+
+app.post('/', (req, res) => {
+	const item = new Item({
+		name: req.body.username
+	});
+	item.save((err) => {
+		if(err){
+			console.log(err);
+		}
+		else {
+			res.redirect('/');
+		}
+	});
 });
 
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 console.log('started server on port 3000');
