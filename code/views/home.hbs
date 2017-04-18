@@ -18,6 +18,6 @@ Description: <input class="textboxid" type="text" name="description"> <br><br>
 <br><br><br><br>
 <div class = "links">
 {{#each items as |item|}}
-<li>{{item.name}} {{item.title}} {{item.size}} {{item.condition}} {{item.description}}</li>
+{{item.name}} 		URL:{{item.image}} 		Size: {{item.size}} 		Condition: {{item.condition}}/10 		Description: {{item.description}}
 {{/each}}
 </div>
