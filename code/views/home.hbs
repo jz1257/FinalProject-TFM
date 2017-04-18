@@ -1,15 +1,23 @@
 
+<center><h1>Welcome to The Flee Market<h1></center>
 
-<ol>
-{{#each items as |item|}}
-<li>{{item.name}}</li>
-{{/each}}
-</ol>
+<div class = "profile"><h3><a href='user'>Your Profile</a><h3></div>
 
-
-<center><h1>Welcome to The Flee Market test<h1></center>
-
+<div class = "listing">
 <form method="POST" action="">
-Username: <input type="text" name="username"> <br><br>
-<input type="submit" value="Submit">
+Name: <input type="text" name="name"> <br><br>
+Image Link: <input type="text" name="imageURL"> <br><br>
+Size: <input type="text" name="size"> <br><br>
+Condition (out of 10) : <input type="text" name="condition"> <br><br>
+Description: <input class="textboxid" type="text" name="description"> <br><br>
+
+<input type="submit" value="Submit Listing"> 
 </form>
+</div>
+
+<br><br><br><br>
+<div class = "links">
+{{#each items as |item|}}
+<li>{{item.name}} {{item.title}} {{item.size}} {{item.condition}} {{item.description}}</li>
+{{/each}}
+</div>
