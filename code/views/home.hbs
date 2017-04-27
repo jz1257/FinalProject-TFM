@@ -4,20 +4,28 @@
 <div class = "profile"><h3><a href='user'>Your Profile</a><h3></div>
 
 <div class = "listing">
-<form method="POST" action="">
-Name: <input type="text" name="name"> <br><br>
-Image Link: <input type="text" name="imageURL"> <br><br>
-Size: <input type="text" name="size"> <br><br>
-Condition (out of 10) : <input type="text" name="condition"> <br><br>
-Description: <input class="textboxid" type="text" name="description"> <br><br>
+	<form method="POST" action="">
+		Name: <input type="text" name="name"> <br><br>
+		Image Link: <input type="text" name="imageURL"> <br><br>
+		Size: <input type="text" name="size"> <br><br>
+		Condition (out of 10) : <input type="text" name="condition"> <br><br>
+		Description: <input class="textboxid" type="text" name="description"> <br><br>
 
-<input type="submit" value="Submit Listing"> 
-</form>
+		<input type="submit" value="Submit Listing"> 
+	</form>
 </div>
 
 <br><br><br><br>
-<div class = "links">
-{{#each items as |item|}}
-{{item.name}} URL:{{item.image}} 		Size: {{item.size}} 		Condition: {{item.condition}}/10 		Description: {{item.description}}
-{{/each}}
+{{#each items}}
+<img width="480" height="320" class="pic" src= "{{this.image}}"  /> 
+<div class = descriptions>
+	<div style="font-weight: bold">Posted by User: </div> <br><br>
+	{{this.name}} <br><br> Size {{this.size}} <br><br> Condition: {{this.condition}}/10 <br><br> Description: {{this.description}} 
+	<br><br> <a href="comments">[Comments]</a>
 </div>
+
+<div style="clear:both"></div>
+<br><br><br><br><br>
+
+{{/each}}
+

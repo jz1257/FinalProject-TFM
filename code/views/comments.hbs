@@ -1,0 +1,17 @@
+<h2>Comments</h2>
+{{#each comments as |comment|}}
+	<p>
+		<i>{{user}}:</i>
+		<h3>{{text}}</h3>
+	</p>
+{{/each}}
+
+
+<form method="POST" action="">
+	Comment: <input type="text" name="text">
+	<input type="submit" value="Add Comment">
+</form>
+
+{{#if lastComment}}
+	<br>(the last comment you made was <i>{{lastComment}}</i>)
+{{/if}}

@@ -1,5 +1,10 @@
 <h1>Register</h1>
-
+{{#if error}}
+    <p>{{error}}!<br>Please try again</p>
+{{/if}}
+{{#if user}}
+    <p>You are already logged in!</p>
+ {{/if}}
 
 <form method="POST" action="">
 Username: <input type="text" name="username"> <br><br>

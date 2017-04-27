@@ -1,3 +1,5 @@
+//final project
+
 //express setup
 const express = require('express');
 const app = express();
@@ -36,10 +38,25 @@ Item1 = mongoose.model('Item1');
 User = mongoose.model('User');
 Comment = mongoose.model('Comment');
 
+//passport setup
+const flash = require('connect-flash');
+const passport = require('passport');
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+const LocalStrat = require('passport-local').Strategy;
+passport.use(new LocalStrat(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+
 //displays index page
 app.get('/', function (req, res) {
 	res.render('index'); 
 });
+
 
 app.get('/register', function (req, res) {
 	res.render('register');
@@ -96,10 +113,39 @@ app.post('/register', (req, res) => {
 	}
 });
 
+/*
+app.get('/register', function(req, res) {
+    res.render('register', {error : req.flash('error'), user: req.user});
+});
+
+app.post('/register', function(req, res, next) {
+    User.register(new User({ username : req.body.username}), req.body.password, function(err, user) {
+        if (err) {
+            console.log(err);
+			res.send('An error occurred, please see the server logs for more information');
+        }
+        else {
+	        passport.authenticate('local')(req, res, function () {
+	            res.redirect('/home');
+	        });
+    	}	
+    });
+});
+
 app.get('/login', function(req, res) {
 	res.render('login');
 });
 
+app.post('/login', passport.authenticate('local', {
+    successRedirect : '/home',
+    failureRedirect : '/login',
+    failureFlash : true
+}));
+*/
+
+app.get('/login', function(req, res) {
+	res.render('login');
+});
 
 app.post('/login', function(req, res) {
 	User.findOne({username: req.body.username}, (err, user) => {
@@ -128,6 +174,8 @@ app.post('/login', function(req, res) {
 	});
 });
 
+
+
 app.get('/home', (req, res) => {
 	Item1.find({}, (err, items) => {
 		if(err) {
@@ -135,7 +183,7 @@ app.get('/home', (req, res) => {
 			res.render('error', {});
 		}
 		else {
-			res.render('home', {items: items});
+			res.render('home', {user : req.user, items: items.reverse()});
 		}
 	});
 });
@@ -163,6 +211,43 @@ app.get('/user', (req, res)=> {
 	res.render('user', {user: req.session.username});
 });
 
+
+app.get('/comments', (req, res) => {
+	/*
+	const id = req.params.slug;
+	let lastComment;
+	if(req.session) {
+		lastComment = req.session.lastComment;
+	}
+	Item1.find({slug:id}, (err, item) => {
+		if(err || !item.length) {
+			res.render('error', {});
+		}
+		else {
+			res.render('comments', { lastComment: lastComment});
+		}
+	});
+	*/
+	res.render('comments', {});
+});
+
+app.post('/:slug', (req, res) => {
+	const comment = new Comment({
+		text: req.body.text,
+		user: req.body.user
+	});
+	req.session.lastComment = comment.text;
+	Item1.findOneAndUpdate(
+		{slug: req.params.slug},
+		{$push: {comments:comment}}, (err, item) => {
+			if(err) {
+				res.render('error', {});
+			}
+			else {
+				res.redirect('/' + req.params.slug);
+			}
+		});
+});
 
 app.listen(process.env.PORT || 3000);
 console.log('started server on port 3000');
