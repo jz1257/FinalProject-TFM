@@ -139,7 +139,6 @@ app.get('/username/:userName', (req, res)=> {
 
 
 app.get('/comments/:shoe', (req, res) => {
-/*
 	const id = req.params.slug;
 	let lastComment;
 	if(req.session) {
@@ -153,11 +152,9 @@ app.get('/comments/:shoe', (req, res) => {
 			res.render('comments', { lastComment: lastComment});
 		}
 	});
-	*/
-
-	res.render('comments');
+	
 });
-/*
+
 app.post('/comments/:slug', (req, res) => {
 	const comment = new Comment({
 		text: req.body.text,
@@ -171,10 +168,10 @@ app.post('/comments/:slug', (req, res) => {
 				res.render('error', {});
 			}
 			else {
-				res.redirect('/' + req.params.slug);
+				res.redirect('/comments/' + req.params.slug);
 			}
 		});
 });
-*/
+
 app.listen(process.env.PORT || 3000);
 console.log('started server on port 3000');
