@@ -12,6 +12,11 @@ body {
 	margin-right: 50px;
 }
 
+.logout {
+	text-align: right;
+	margin-right: 50px;
+}
+
 .listing {
 	text-align: center;
 }
@@ -40,4 +45,30 @@ body {
 	width:480px;
 	text-align: center;
 
+}
+
+.pic2 {
+	float:left; 
+	width:480px;
+	margin-left: 60px;
+	border:2px solid #021a40;
+}
+
+.descriptions2 {
+	float:left; 
+	width:480px;
+	text-align: center;
+
+}
+
+.topbar {
+	color: blue;
+}
+
+.login {
+	color: blue;
+}
+
+.title {
+	color:red;
 }

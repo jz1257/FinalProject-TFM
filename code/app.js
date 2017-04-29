@@ -4,6 +4,7 @@
 const express = require('express');
 const app = express();
 
+
 //body parser setup
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,21 +36,20 @@ require('./db');
 //mongoose setup
 const mongoose = require('mongoose'),
 Item1 = mongoose.model('Item1');
-User = mongoose.model('User');
+User2 = mongoose.model('User2');
 Comment = mongoose.model('Comment');
 
 //passport setup
 const flash = require('connect-flash');
 const passport = require('passport');
+const LocalStrat = require('passport-local').Strategy;
+const passportLocalMongoose = require('passport-local-mongoose');
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-
-const LocalStrat = require('passport-local').Strategy;
-passport.use(new LocalStrat(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
+passport.use(new LocalStrat(User2.authenticate()));
+passport.serializeUser(User2.serializeUser());
+passport.deserializeUser(User2.deserializeUser());
 
 
 //displays index page
@@ -57,83 +57,26 @@ app.get('/', function (req, res) {
 	res.render('index'); 
 });
 
-
-app.get('/register', function (req, res) {
-	res.render('register');
-});
-
-app.post('/register', (req, res) => {
-	const pw = req.body.password;
-	if (pw.length < 8) {
-		res.render('error', {message: 'pw length issue'});
-	}
-	else {
-		const un = req.body.username;
-		User.findOne({username:un}, (err, result) => {
-			if (err) {
-				console.log(err);
-				res.send('an error occurred, please see the server logs for more information1');	
-			}
-			else if (result) {
-				res.render('error', {message: 'user already exists'});
-			}
-			else {
-				bcrypt.hash(pw, 10, (err, hash) => {
-					if (err) {
-						console.log(err);
-						res.send('an error occurred, please see the server logs for more information2');	
-					}
-					else {
-						const user = new User({
-							username: un,
-							password: hash
-						});
-						user.save((err) => {
-							if (err) {
-								console.log(err);
-								res.send('an error occurred, please see the server logs for more information3');	
-							}
-							else {
-								req.session.regenerate((err) => {
-									if (err) {
-										console.log(err);
-										res.send('an error occurred, please see the server logs for more information4');	
-									}
-									else {
-										req.session.username = user.username;
-										res.redirect('/home');
-									}
-								});
-							}
-						});
-					}
-				});
-			}
-		});
-	}
-});
-
-/*
 app.get('/register', function(req, res) {
-    res.render('register', {error : req.flash('error'), user: req.user});
+    res.render('register', {error : req.flash('error')});
 });
 
 app.post('/register', function(req, res, next) {
-    User.register(new User({ username : req.body.username}), req.body.password, function(err, user) {
+    User2.register(new User2({ username : req.body.username}), req.body.password, function(err, user) {
         if (err) {
-            console.log(err);
-			res.send('An error occurred, please see the server logs for more information');
+            req.flash('error', err.message);
+            return res.redirect('/register');
         }
         else {
 	        passport.authenticate('local')(req, res, function () {
 	            res.redirect('/home');
 	        });
-    	}	
+	    }
     });
 });
 
 app.get('/login', function(req, res) {
-	res.render('login');
+	res.render('login', {user : req.user, error : req.flash('error') });
 });
 
 app.post('/login', passport.authenticate('local', {
@@ -141,39 +84,11 @@ app.post('/login', passport.authenticate('local', {
     failureRedirect : '/login',
     failureFlash : true
 }));
-*/
 
-app.get('/login', function(req, res) {
-	res.render('login');
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
 });
-
-app.post('/login', function(req, res) {
-	User.findOne({username: req.body.username}, (err, user) => {
-		if (!err && user) {
-			bcrypt.compare(req.body.password, user.password, (err, passwordMatch) => {
-				if (passwordMatch) {
-					req.session.regenerate((err) => {
-						if (!err) {
-							req.session.username = user.username;
-							res.redirect('/home'); 
-						} 
-						else {
-							console.log('error'); 
-							res.send('an error occurred, please see the server logs for more information');
-						}
-					});
-				}
-				else {
-					res.render('error', {message: "Incorrect Password"});
-				}
-			});
-		}
-		else {
-			res.render('error', {message: 'user does not exist'});
-		}
-	});
-});
-
 
 
 app.get('/home', (req, res) => {
@@ -190,6 +105,7 @@ app.get('/home', (req, res) => {
 
 app.post('/home', (req, res) => {
 	const item = new Item1({
+		user: req.user.username,
 		name: req.body.name,
 		image: req.body.imageURL,
 		size: req.body.size,
@@ -207,13 +123,23 @@ app.post('/home', (req, res) => {
 	});
 });
 
-app.get('/user', (req, res)=> {
-	res.render('user', {user: req.session.username});
+app.get('/username/:userName', (req, res)=> {
+	//res.render('user', {user: req.user});
+	User2.findOne({username:req.params.userName}, function(err, user, count) {
+        if (!user) {
+            res.render('error', {message: "No user"});
+        }
+        else {
+            Item1.find({user:user.username}, function(err, items, count) {
+                res.render('user', {user:user, items:items});
+            });
+        }
+    });
 });
 
 
-app.get('/comments', (req, res) => {
-	/*
+app.get('/comments/:shoe', (req, res) => {
+/*
 	const id = req.params.slug;
 	let lastComment;
 	if(req.session) {
@@ -228,10 +154,11 @@ app.get('/comments', (req, res) => {
 		}
 	});
 	*/
-	res.render('comments', {});
-});
 
-app.post('/:slug', (req, res) => {
+	res.render('comments');
+});
+/*
+app.post('/comments/:slug', (req, res) => {
 	const comment = new Comment({
 		text: req.body.text,
 		user: req.body.user
@@ -248,6 +175,6 @@ app.post('/:slug', (req, res) => {
 			}
 		});
 });
-
+*/
 app.listen(process.env.PORT || 3000);
 console.log('started server on port 3000');

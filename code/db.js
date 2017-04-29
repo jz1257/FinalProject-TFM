@@ -5,12 +5,12 @@ const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
 //User schema
-const User = new Schema({
+const User2 = new Schema({
   username: String,
   password: String
 });
 
-User.plugin(passportLocalMongoose);
+User2.plugin(passportLocalMongoose);
 
 //Comment schema
 const Comment = new Schema({
@@ -20,6 +20,7 @@ const Comment = new Schema({
 
 //Item schema
 const Item1 = new Schema({
+  user: String,
   name: String,
   image: String,
   size: String,
@@ -30,7 +31,7 @@ const Item1 = new Schema({
 
 Item1.plugin(urlSlugs('name'));
 
-mongoose.model('User', User);
+mongoose.model('User2', User2);
 mongoose.model('Item1', Item1);
 mongoose.model('Comment', Comment);
 

@@ -1,2 +1,19 @@
-Welcome {{user}}
+<a href="/home"">Home</a>
+ 
 
+<div class = "title"><h1><center>{{user.username}}'s Profile</center></h1></div><br><br><br>
+
+{{#each items}}
+<div style = "float:left; width:480px; margin-left: 60px; border:2px solid #021a40"><img width="480" height="320" src= "{{this.image}}"  /> </div>
+<div style = "float:left; 
+	width:480px;
+	text-align: center">
+	<br><br>
+	{{this.name}} <br><br> Size {{this.size}} <br><br> Condition: {{this.condition}}/10 <br><br> Description: {{this.description}} 
+	<br><br> <a href="comments">[Comments]</a>
+</div>
+
+<div style="clear:both"></div>
+<br><br><br><br><br>
+
+{{/each}}
