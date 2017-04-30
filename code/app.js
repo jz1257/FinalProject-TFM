@@ -137,11 +137,18 @@ app.get('/username/:userName', (req, res)=> {
             res.render('error', {message: "No user"});
         }
         else {
+
             Item1.find({user:user.username}, function(err, items, count) {
-                res.render('user', {user:user, items:items});
+                res.render('user', {user:user, items:items, wishlist: req.session.wish });
             });
         }
     });
+});
+
+app.post('/username/:userName', (req, res)=> {
+	const wish = req.body.shoes;
+	req.session.wish = wish;
+	res.redirect('/username/' + req.params.userName);
 });
 
 //linking to comments

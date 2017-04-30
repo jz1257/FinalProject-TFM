@@ -15,7 +15,8 @@ User2.plugin(passportLocalMongoose);
 //Comment schema
 const Comment = new Schema({
   text: String,
-  user: String
+  user: String,
+  wishlist: String
 });
 
 //Item schema
