@@ -1,4 +1,11 @@
+<div style="padding: 50px;
+  font-family: Avant Garde, Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+  background-color: #A9A9A9">
 <h2>Comments</h2>
+
+<a href="/home"">Home</a>
+
+
 {{#each comments as |comment|}}
 	<p>
 		<i>{{user}}:</i>
@@ -9,9 +16,12 @@
 
 <form method="POST" action="">
 	Comment: <input type="text" name="text">
+	<input type="hidden" name="user" value="{{user}}">
 	<input type="submit" value="Add Comment">
 </form>
 
 {{#if lastComment}}
 	<br>(the last comment you made was <i>{{lastComment}}</i>)
 {{/if}}
+
+</div>

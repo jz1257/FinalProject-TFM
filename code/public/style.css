@@ -1,11 +1,18 @@
-/*
 body {
-	font-family: Arial, Verdana, sans-serif;
-	font-size: 12px;
-	background-color: #98AFC7;
-	color: ##000080;
+	padding: 50px;
+  	font-family: "Avant Garde", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  	background-color: #A9A9A9; 
 }
-*/
+
+a:hover {
+  	color: #AA4500; 
+}
+
+.user {
+	padding: 50px;
+  	font-family: "Avant Garde", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  	background-color: #A9A9A9; 
+}
 
 .profile {
 	text-align: right;
@@ -47,28 +54,9 @@ body {
 
 }
 
-.pic2 {
-	float:left; 
-	width:480px;
-	margin-left: 60px;
-	border:2px solid #021a40;
-}
 
-.descriptions2 {
-	float:left; 
-	width:480px;
-	text-align: center;
-
-}
-
-.topbar {
-	color: blue;
-}
-
-.login {
-	color: blue;
-}
-
-.title {
-	color:red;
+.comments {
+	padding: 50px;
+  	font-family: "Avant Garde", "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  	background-color: #A9A9A9; 
 }

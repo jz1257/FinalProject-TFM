@@ -57,10 +57,13 @@ app.get('/', function (req, res) {
 	res.render('index'); 
 });
 
+
+//get register page
 app.get('/register', function(req, res) {
     res.render('register', {error : req.flash('error')});
 });
 
+//post register using passport
 app.post('/register', function(req, res, next) {
     User2.register(new User2({ username : req.body.username}), req.body.password, function(err, user) {
         if (err) {
@@ -75,22 +78,25 @@ app.post('/register', function(req, res, next) {
     });
 });
 
+//get login page
 app.get('/login', function(req, res) {
 	res.render('login', {user : req.user, error : req.flash('error') });
 });
 
+//post login page using passport
 app.post('/login', passport.authenticate('local', {
     successRedirect : '/home',
     failureRedirect : '/login',
     failureFlash : true
 }));
 
+//log out 
 app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
 });
 
-
+//display home page with listings and option to submit listings
 app.get('/home', (req, res) => {
 	Item1.find({}, (err, items) => {
 		if(err) {
@@ -103,6 +109,7 @@ app.get('/home', (req, res) => {
 	});
 });
 
+//submitting a listing
 app.post('/home', (req, res) => {
 	const item = new Item1({
 		user: req.user.username,
@@ -123,8 +130,8 @@ app.post('/home', (req, res) => {
 	});
 });
 
+//linking to a user's page
 app.get('/username/:userName', (req, res)=> {
-	//res.render('user', {user: req.user});
 	User2.findOne({username:req.params.userName}, function(err, user, count) {
         if (!user) {
             res.render('error', {message: "No user"});
@@ -137,8 +144,8 @@ app.get('/username/:userName', (req, res)=> {
     });
 });
 
-
-app.get('/comments/:shoe', (req, res) => {
+//linking to comments
+app.get('/comments/:slug', (req, res) => {
 	const id = req.params.slug;
 	let lastComment;
 	if(req.session) {
@@ -149,18 +156,19 @@ app.get('/comments/:shoe', (req, res) => {
 			res.render('error', {});
 		}
 		else {
-			res.render('comments', { lastComment: lastComment});
+			res.render('comments', {user: req.user, comments: item.comment, lastComment: lastComment});
 		}
 	});
 	
 });
 
+//commenting
 app.post('/comments/:slug', (req, res) => {
 	const comment = new Comment({
 		text: req.body.text,
-		user: req.body.user
+		user: req.user.username
 	});
-	req.session.lastComment = comment.text;
+	req.session.lastComment = comment.user;
 	Item1.findOneAndUpdate(
 		{slug: req.params.slug},
 		{$push: {comments:comment}}, (err, item) => {

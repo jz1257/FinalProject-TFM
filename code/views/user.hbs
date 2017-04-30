@@ -1,3 +1,6 @@
+<div style="padding: 50px;
+  font-family: Avant Garde, Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+  background-color: #A9A9A9">
 <a href="/home"">Home</a>
  
 
@@ -10,10 +13,11 @@
 	text-align: center">
 	<br><br>
 	{{this.name}} <br><br> Size {{this.size}} <br><br> Condition: {{this.condition}}/10 <br><br> Description: {{this.description}} 
-	<br><br> <a href="comments">[Comments]</a>
+	<br><br> <a href="/comments/{{this.slug}}">[Comments]</a>
 </div>
 
 <div style="clear:both"></div>
 <br><br><br><br><br>
 
 {{/each}}
+</div>
